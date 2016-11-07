@@ -1,0 +1,14 @@
+.b-form {
+  .b-label {
+    display: block;
+    &.has-error {
+      color: #a94442;
+    }
+    &_required:after {
+      content: "*";
+    }
+  }
+  .container {
+    width: 100%;
+  }
+}

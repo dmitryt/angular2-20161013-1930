@@ -1,0 +1,45 @@
+<div class="b-form">
+  <div class="modal-header">
+   <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+     <span aria-hidden="true">&times;</span>
+   </button>
+   <h4 class="modal-title">{{title}}</h4>
+  </div>
+  <div class="modal-body">
+    <form novalidate [formGroup]="userForm">
+      <div class="container">
+        <div class="row">
+          <label class="b-label form-group col-md-6" [ngClass]="{'has-error': userForm.controls.firstName.errors}">
+            <span class="b-label_required">First Name</span>
+            <input type="text" class="form-control" formControlName="firstName" placeholder="First Name">
+          </label>
+          <label class="b-label form-group col-md-6" [ngClass]="{'has-error': userForm.controls.lastName.errors}">
+            <span class="b-label_required">Last Name</span>
+            <input type="text" class="form-control" formControlName="lastName" placeholder="Last Name">
+          </label>
+        </div>
+        <div class="row">
+          <label class="b-label form-group col-md-6">
+            <span class="b-label_required">Email</span>
+            <input type="text" class="form-control" formControlName="email" placeholder="Email">
+          </label>
+          <label class="b-label form-group col-md-3" [ngClass]="{'has-error': userForm.controls.firstName.errors}">
+            <span class="b-label_required">Sex</span>
+            <select class="form-control" formControlName="sex" placeholder="Sex">
+              <option value="m">Male</option>
+              <option value="f">Female</option>
+            </select>
+          </label>
+          <label class="b-label form-group col-md-3">
+            <span>Age</span>
+            <input type="text" class="form-control" formControlName="age" placeholder="Age">
+          </label>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+   <button type="button" class="btn btn-secondary" (click)="activeModal.close('Close click')">Close</button>
+   <button type="submit" [disabled]="userForm.invalid" class="btn btn-primary" (click)="activeModal.close('Close click')">Save</button>
+  </div>
+</div>

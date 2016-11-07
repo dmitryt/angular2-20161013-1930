@@ -1,0 +1,31 @@
+<div class="b-users">
+  <div class="text-right">
+    <button type="button" class="btn btn-primary" (click)="onAdd()">Add User</button>
+  </div>
+  <table class="b-users-table table table-hover">
+    <tr>
+      <th>#</th>
+      <th>
+        First Name
+
+      </th>
+      <th>Last Name</th>
+      <th>Email</th>
+      <th>Age</th>
+      <th>Sex</th>
+      <th></th>
+    </tr>
+    <tr class="b-users-row" *ngFor="let user of users; let i = index">
+      <td>{{i + 1}}</td>
+      <td>{{user.firstName}}</td>
+      <td>{{user.lastName}}</td>
+      <td>{{user.email}}</td>
+      <td>{{user.age}}</td>
+      <td>{{user.sex}}</td>
+      <td class="text-right">
+        <div class="glyphicon glyphicon-pencil" title="Edit" (click)="onEdit(user)"></div>
+        <div class="glyphicon glyphicon-trash" title="Remove" (click)="onEdit(user)"></div>
+      </td>
+    </tr>
+  </table>
+</div>
