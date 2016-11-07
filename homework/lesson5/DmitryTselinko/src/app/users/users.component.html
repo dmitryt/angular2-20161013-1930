@@ -2,30 +2,49 @@
   <div class="text-right">
     <button type="button" class="btn btn-primary" (click)="onAdd()">Add User</button>
   </div>
-  <table class="b-users-table table table-hover">
-    <tr>
-      <th>#</th>
-      <th>
-        First Name
-
-      </th>
-      <th>Last Name</th>
-      <th>Email</th>
-      <th>Age</th>
-      <th>Sex</th>
-      <th></th>
-    </tr>
-    <tr class="b-users-row" *ngFor="let user of users; let i = index">
-      <td>{{i + 1}}</td>
-      <td>{{user.firstName}}</td>
-      <td>{{user.lastName}}</td>
-      <td>{{user.email}}</td>
-      <td>{{user.age}}</td>
-      <td>{{user.sex}}</td>
-      <td class="text-right">
-        <div class="glyphicon glyphicon-pencil" title="Edit" (click)="onEdit(user)"></div>
-        <div class="glyphicon glyphicon-trash" title="Remove" (click)="onEdit(user)"></div>
-      </td>
-    </tr>
-  </table>
+  <form #filterForm="ngForm">
+    <table class="b-users-table table table-hover">
+      <thead class="b-users-filters">
+        <tr>
+          <th>#</th>
+          <th>
+            First Name
+            <input type="text" class="form-control" name="firstName" [(ngModel)]="filterData.firstName" (keyup)="onSearch()" />
+          </th>
+          <th>
+            Last Name
+            <input type="text" class="form-control" name="lastName" [ngModel]="filterData.lastName" />
+          </th>
+          <th>
+            Email
+            <input type="text" class="form-control" name="email" [ngModel]="filterData.email" />
+          </th>
+          <th>
+            Age
+            <input type="text" class="form-control" name="age" [ngModel]="filterData.age" />
+          </th>
+          <th>
+            Sex
+            <select class="form-control" name="sex" [ngModel]="filterData.sex">
+              <option value="m">Male</option>
+              <option value="f">Female</option>
+            </select>
+          </th>
+          <th></th>
+        </tr>
+      </thead>
+      <tr class="b-users-row" *ngFor="let user of users | async; let i = index">
+        <td>{{i + 1}}</td>
+        <td>{{user.firstName}}</td>
+        <td>{{user.lastName}}</td>
+        <td>{{user.email}}</td>
+        <td>{{user.age}}</td>
+        <td>{{user.sex}}</td>
+        <td class="text-right">
+          <div class="glyphicon glyphicon-pencil" title="Edit" (click)="onEdit(user)"></div>
+          <div class="glyphicon glyphicon-trash" title="Remove" (click)="onEdit(user)"></div>
+        </td>
+      </tr>
+    </table>
+  </form>
 </div>

@@ -26,4 +26,8 @@ export class FormComponent {
     });
   }
 
+  onSubmit() {
+    console.log(this.userForm);
+  }
+
 }
