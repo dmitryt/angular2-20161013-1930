@@ -13,19 +13,20 @@
           </th>
           <th>
             Last Name
-            <input type="text" class="form-control" name="lastName" [ngModel]="filterData.lastName" />
+            <input type="text" class="form-control" name="lastName" [(ngModel)]="filterData.lastName" (keyup)="onSearch()" />
           </th>
           <th>
             Email
-            <input type="text" class="form-control" name="email" [ngModel]="filterData.email" />
+            <input type="text" class="form-control" name="email" [(ngModel)]="filterData.email" (keyup)="onSearch()" />
           </th>
           <th>
             Age
-            <input type="text" class="form-control" name="age" [ngModel]="filterData.age" />
+            <input type="text" class="form-control" name="age" [(ngModel)]="filterData.age" (keyup)="onSearch()" />
           </th>
           <th>
             Sex
-            <select class="form-control" name="sex" [ngModel]="filterData.sex">
+            <select class="form-control" name="sex" [(ngModel)]="filterData.sex"  (change)="onSearch()" >
+              <option value=""></option>
               <option value="m">Male</option>
               <option value="f">Female</option>
             </select>

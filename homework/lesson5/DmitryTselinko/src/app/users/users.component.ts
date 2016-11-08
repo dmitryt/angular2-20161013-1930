@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, Subject } from 'rxjs';
+
 import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/observable/race';
 
 import { UsersService } from './users.service';
 import { FormComponent } from './form/form.component';
@@ -13,13 +15,23 @@ import { User } from './user';
   styleUrls: ['./users.component.scss']
 })
 export class UsersComponent implements OnInit {
-  private _searchData: Subject<Object>;
+  private _searchTerms = new Subject<Object>();
   users: Observable<User[]>;
   filterData = {};
   constructor(private _modalService: NgbModal, private _usersService: UsersService) {}
 
   ngOnInit(): void {
-    this.users = this._usersService.all();
+    let searchStream = this._searchTerms
+      .debounceTime(300)
+      .distinctUntilChanged()
+      .switchMap(term => {
+        debugger;
+        return term ? this._usersService.search(term) : this._usersService.all()
+      });
+    this.users = Observable.combineLatest(
+      searchStream,
+      this._usersService.all()
+    );
   }
 
   getEmptyUser(): User {
@@ -38,7 +50,7 @@ export class UsersComponent implements OnInit {
   }
 
   onSearch() {
-    this.users = this._usersService.search(this.filterData);
+    this._searchTerms.next(this.filterData);
   }
 
   onEdit(user: User): void {

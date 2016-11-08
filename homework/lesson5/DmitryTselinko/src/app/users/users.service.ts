@@ -11,11 +11,12 @@ export class UsersService {
   search(filterData: Object): Observable<User[]> {
     return this
       .all()
+      .concatAll()
       .filter(user => {
-        console.log(arguments, filterData);
+        console.log(user);
         return Object.keys(filterData).every((key: string) => {
           return String(user[key]).indexOf(filterData[key]) !== -1;
-        })
+        });
       })
     ;
 
