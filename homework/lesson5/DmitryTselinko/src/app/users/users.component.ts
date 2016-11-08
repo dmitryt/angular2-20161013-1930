@@ -15,23 +15,13 @@ import { User } from './user';
   styleUrls: ['./users.component.scss']
 })
 export class UsersComponent implements OnInit {
-  private _searchTerms = new Subject<Object>();
+  private _searchTerms: Subject<Object>;
   users: Observable<User[]>;
   filterData = {};
   constructor(private _modalService: NgbModal, private _usersService: UsersService) {}
 
   ngOnInit(): void {
-    let searchStream = this._searchTerms
-      .debounceTime(300)
-      .distinctUntilChanged()
-      .switchMap(term => {
-        debugger;
-        return term ? this._usersService.search(term) : this._usersService.all()
-      });
-    this.users = Observable.combineLatest(
-      searchStream,
-      this._usersService.all()
-    );
+    this.users = this._usersService.all();
   }
 
   getEmptyUser(): User {
@@ -44,21 +34,33 @@ export class UsersComponent implements OnInit {
     }
   }
 
-  _openDialog(user: User): void {
+  _openDialog(user: User): Promise<any> {
     const modalRef = this._modalService.open(FormComponent);
     modalRef.componentInstance.initForm(user);
+    return modalRef.result;
   }
 
   onSearch() {
+    if (!this._searchTerms) {
+      this._searchTerms = new Subject<Object>();
+      this.users = this._searchTerms
+        .switchMap(term => {
+          return term ? this._usersService.search(term) : this._usersService.all()
+        });
+    }
     this._searchTerms.next(this.filterData);
   }
 
   onEdit(user: User): void {
-    this._openDialog(user);
+    this._openDialog(user).then(data => {
+      debugger;
+    });
   }
 
   onAdd(): void {
-    this._openDialog(this.getEmptyUser());
+    this._openDialog(this.getEmptyUser()).then(data => {
+      debugger;
+    });
   }
 
 }

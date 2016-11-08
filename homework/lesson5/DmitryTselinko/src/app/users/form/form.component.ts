@@ -27,7 +27,7 @@ export class FormComponent {
   }
 
   onSubmit() {
-    console.log(this.userForm);
+    this.activeModal.close(this.userForm.value);
   }
 
 }

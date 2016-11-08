@@ -25,7 +25,7 @@
           </th>
           <th>
             Sex
-            <select class="form-control" name="sex" [(ngModel)]="filterData.sex"  (change)="onSearch()" >
+            <select class="form-control" name="sex" [(ngModel)]="filterData.sex" (ngModelChange)="onSearch()" >
               <option value=""></option>
               <option value="m">Male</option>
               <option value="f">Female</option>
